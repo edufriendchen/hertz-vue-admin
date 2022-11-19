@@ -1,0 +1,187 @@
+aliyun-oss:
+  endpoint: yourEndpoint
+  access-key-id: yourAccessKeyId
+  access-key-secret: yourAccessKeySecret
+  bucket-name: yourBucketName
+  bucket-url: yourBucketUrl
+  base-path: yourBasePath
+autocode:
+  transfer-restart: true
+  root: D:\GoPath\src\github.com\cloudwego\hertz-vue-admin
+  server: /server
+  server-api: /api/v1/%s
+  server-plug: /plugin/%s
+  server-initialize: /initialize
+  server-model: /model/%s
+  server-request: /model/%s/request/
+  server-router: /router/%s
+  server-service: /service/%s
+  web: /web/src
+  web-api: /api
+  web-form: /view
+  web-table: /view
+aws-s3:
+  bucket: xxxxx-10005608
+  region: ap-shanghai
+  endpoint: ""
+  s3-force-path-style: false
+  disable-ssl: false
+  secret-id: your-secret-id
+  secret-key: your-secret-key
+  base-url: https://gin.vue.admin
+  path-prefix: github.com/edufriendchen/hertz-vue-admin/server
+captcha:
+  key-long: 6
+  img-width: 240
+  img-height: 80
+cors:
+  mode: whitelist
+  whitelist:
+  - allow-origin: example1.com
+    allow-methods: GET, POST
+    allow-headers: content-type
+    expose-headers: Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers,
+      Content-Type
+    allow-credentials: true
+  - allow-origin: example2.com
+    allow-methods: GET, POST
+    allow-headers: content-type
+    expose-headers: Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers,
+      Content-Type
+    allow-credentials: true
+db-list:
+- disable: true
+  type: ""
+  alias-name: ""
+  path: ""
+  port: ""
+  config: ""
+  db-name: ""
+  username: ""
+  password: ""
+  prefix: ""
+  singular: false
+  engine: ""
+  max-idle-conns: 10
+  max-open-conns: 100
+  log-mode: ""
+  log-zap: false
+email:
+  to: xxx@qq.com
+  port: 465
+  from: xxx@163.com
+  host: smtp.163.com
+  is-ssl: true
+  secret: xxx
+  nickname: test
+excel:
+  dir: ./resource/excel/
+hua-wei-obs:
+  path: you-path
+  bucket: you-bucket
+  endpoint: you-endpoint
+  access-key: you-access-key
+  secret-key: you-secret-key
+jwt:
+  signing-key: 973123d2-3d19-4812-a494-ac76ccc1e8eb
+  expires-time: 7d
+  buffer-time: 1d
+  issuer: qmPlus
+local:
+  path: uploads/file
+  store-path: uploads/file
+mysql:
+  path: 127.0.0.1
+  port: "3306"
+  config: charset=utf8mb4&parseTime=True&loc=Local
+  db-name: gva
+  username: root
+  password: root
+  prefix: ""
+  singular: false
+  engine: ""
+  max-idle-conns: 10
+  max-open-conns: 100
+  log-mode: error
+  log-zap: false
+oracle:
+  path: ""
+  port: ""
+  config: ""
+  db-name: ""
+  username: ""
+  password: ""
+  prefix: ""
+  singular: false
+  engine: ""
+  max-idle-conns: 0
+  max-open-conns: 0
+  log-mode: ""
+  log-zap: false
+pgsql:
+  path: ""
+  port: ""
+  config: ""
+  db-name: ""
+  username: ""
+  password: ""
+  prefix: ""
+  singular: false
+  engine: ""
+  max-idle-conns: 10
+  max-open-conns: 100
+  log-mode: ""
+  log-zap: false
+qiniu:
+  zone: ZoneHuaDong
+  bucket: ""
+  img-path: ""
+  use-https: false
+  access-key: ""
+  secret-key: ""
+  use-cdn-domains: false
+redis:
+  db: 1
+  addr: 127.0.0.1:6379
+  password: ""
+system:
+  env: public
+  addr: 8888
+  db-type: mysql
+  oss-type: local
+  single-point-login: false
+  max-multipoint-login-num: 3
+  use-redis: true
+  iplimit-count: 15000
+  iplimit-time: 3600
+tencent-cos:
+  bucket: xxxxx-10005608
+  region: ap-shanghai
+  secret-id: your-secret-id
+  secret-key: your-secret-key
+  base-url: https://gin.vue.admin
+  path-prefix: github.com/edufriendchen/hertz-vue-admin/server
+timer:
+  start: true
+  spec: '@daily'
+  with_seconds: false
+  detail:
+  - tableName: sys_operation_records
+    compareField: created_at
+    interval: 2160h
+  - tableName: jwt_blacklists
+    compareField: created_at
+    interval: 168h
+zap:
+  level: info
+  prefix: '[github.com/edufriendchen/hertz-vue-admin/server]'
+  format: console
+  director: log
+  encode-level: LowercaseColorLevelEncoder
+  stacktrace-key: stacktrace
+  max-age: 0
+  show-line: true
+  log-in-console: true
+online-user:
+  key: online-
+  online-time: 30
