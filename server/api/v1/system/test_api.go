@@ -17,10 +17,30 @@ func (testApi TestApi) GetApiGroupName() string {
 	return "test"
 }
 
+type test struct {
+	Name string `vd:"len($)>1"`
+	Age  int    `vd:"$>0"`
+}
+
 // Test GetAllOnlineUser 获取在线用户的列表
 func (testApi *TestApi) AddTest(ctx context.Context, c *app.RequestContext) {
 	fmt.Println("新增测试接口--")
-	err := middleware.AuthAndRecord(ctx, c, common.ADD, testApi.GetApiGroupName())
+	var l test
+	err := c.BindAndValidate(&l)
+	fmt.Println(err)
+	fmt.Println("name", l.Name)
+	fmt.Println("age", l.Age)
+	if err != nil {
+		fmt.Println("绑定失败")
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	if err != nil {
+		fmt.Println("验证失败")
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	err = middleware.AuthAndRecord(ctx, c, common.ADD, testApi.GetApiGroupName())
 	if err != nil {
 		fmt.Println(err.Error())
 		global.LOG.Error(err.Error(), zap.Error(err))

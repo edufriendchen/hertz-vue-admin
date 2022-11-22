@@ -39,10 +39,10 @@ export const deleteSysOperationRecordByIds = (data) => {
 // @Param data body request.PageInfo true "分页获取SysOperationRecord列表"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
 // @Router /sysOperationRecord/getSysOperationRecordList [get]
-export const getSysOperationRecordList = (params) => {
+export const getSysOperationRecordList = (data) => {
   return service({
     url: '/sysOperationRecord/getSysOperationRecordList',
-    method: 'get',
-    params
+    method: 'post',
+    data
   })
 }

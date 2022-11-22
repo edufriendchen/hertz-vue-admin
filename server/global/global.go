@@ -28,6 +28,7 @@ var (
 	GVA_Concurrency_Control             = &singleflight.Group{}
 	BlackCache              local_cache.Cache
 	lock                    sync.RWMutex
+	EmailConfig             config.Email
 )
 
 // GetGlobalDBByDBName 通过名称获取db list中的db

@@ -30,11 +30,6 @@ func (e *CustomerApi) CreateExaCustomer(ctx context.Context, c *app.RequestConte
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	err = utils.Verify(customer, utils.CustomerVerify)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
 	customer.SysUserID = utils.GetUserID(c)
 	customer.SysUserAuthorityID = utils.GetUserAuthorityId(c)
 	err = customerService.CreateExaCustomer(customer)
@@ -58,11 +53,6 @@ func (e *CustomerApi) CreateExaCustomer(ctx context.Context, c *app.RequestConte
 func (e *CustomerApi) DeleteExaCustomer(ctx context.Context, c *app.RequestContext) {
 	var customer example.ExaCustomer
 	err := c.BindAndValidate(&customer)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
-	err = utils.Verify(customer.MODEL, utils.IdVerify)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
@@ -92,16 +82,6 @@ func (e *CustomerApi) UpdateExaCustomer(ctx context.Context, c *app.RequestConte
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	err = utils.Verify(customer.MODEL, utils.IdVerify)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
-	err = utils.Verify(customer, utils.CustomerVerify)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
 	err = customerService.UpdateExaCustomer(&customer)
 	if err != nil {
 		global.LOG.Error("更新失败!", zap.Error(err))
@@ -127,11 +107,6 @@ func (e *CustomerApi) GetExaCustomer(ctx context.Context, c *app.RequestContext)
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	err = utils.Verify(customer.MODEL, utils.IdVerify)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
 	data, err := customerService.GetExaCustomer(customer.ID)
 	if err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
@@ -153,11 +128,6 @@ func (e *CustomerApi) GetExaCustomer(ctx context.Context, c *app.RequestContext)
 func (e *CustomerApi) GetExaCustomerList(ctx context.Context, c *app.RequestContext) {
 	var pageInfo request.PageInfo
 	err := c.BindAndValidate(&pageInfo)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
-	err = utils.Verify(pageInfo, utils.PageInfoVerify)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return

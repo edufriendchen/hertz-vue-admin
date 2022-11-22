@@ -41,7 +41,7 @@ func (e *ExcelApi) ExportExcel(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 	filePath := global.CONFIG.Excel.Dir + excelInfo.FileName
-	// err = excelService.ParseInfoList2Excel(excelInfo.InfoList, filePath)
+	err = excelService.ParseInfoList2Excel(excelInfo.InfoList, filePath)
 	// if err != nil {
 	// 	global.LOG.Error("转换Excel失败!", zap.Error(err))
 	// 	response.FailWithMessage("转换Excel失败", c)

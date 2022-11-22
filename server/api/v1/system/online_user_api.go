@@ -23,12 +23,6 @@ func (onlineUserApi *OnlineUserApi) GetAllOnlineUser(ctx context.Context, c *app
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	err = utils.Verify(pageInfo.PageInfo, utils.PageInfoVerify)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
-
 	onlineUserList, total, err := onlineUserService.GetAll()
 	if err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))

@@ -71,10 +71,6 @@ func (a *AuthorityMenuApi) AddMenuAuthority(ctx context.Context, c *app.RequestC
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	if err := utils.Verify(authorityMenu, utils.AuthorityIdVerify); err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
 	if err := menuService.AddMenuAuthority(authorityMenu.Menus, authorityMenu.AuthorityId); err != nil {
 		global.LOG.Error("添加失败!", zap.Error(err))
 		response.FailWithMessage("添加失败", c)
@@ -95,11 +91,6 @@ func (a *AuthorityMenuApi) AddMenuAuthority(ctx context.Context, c *app.RequestC
 func (a *AuthorityMenuApi) GetMenuAuthority(ctx context.Context, c *app.RequestContext) {
 	var param request.GetAuthorityId
 	err := c.BindAndValidate(&param)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
-	err = utils.Verify(param, utils.AuthorityIdVerify)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
@@ -129,16 +120,6 @@ func (a *AuthorityMenuApi) AddBaseMenu(ctx context.Context, c *app.RequestContex
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	err = utils.Verify(menu, utils.MenuVerify)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
-	err = utils.Verify(menu.Meta, utils.MenuMetaVerify)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
 	err = menuService.AddBaseMenu(menu)
 	if err != nil {
 		global.LOG.Error("添加失败!", zap.Error(err))
@@ -160,11 +141,6 @@ func (a *AuthorityMenuApi) AddBaseMenu(ctx context.Context, c *app.RequestContex
 func (a *AuthorityMenuApi) DeleteBaseMenu(ctx context.Context, c *app.RequestContext) {
 	var menu request.GetById
 	err := c.BindAndValidate(&menu)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
-	err = utils.Verify(menu, utils.IdVerify)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
@@ -194,16 +170,6 @@ func (a *AuthorityMenuApi) UpdateBaseMenu(ctx context.Context, c *app.RequestCon
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	err = utils.Verify(menu, utils.MenuVerify)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
-	err = utils.Verify(menu.Meta, utils.MenuMetaVerify)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
 	err = baseMenuService.UpdateBaseMenu(menu)
 	if err != nil {
 		global.LOG.Error("更新失败!", zap.Error(err))
@@ -229,11 +195,6 @@ func (a *AuthorityMenuApi) GetBaseMenuById(ctx context.Context, c *app.RequestCo
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	err = utils.Verify(idInfo, utils.IdVerify)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
 	menu, err := baseMenuService.GetBaseMenuById(idInfo.ID)
 	if err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
@@ -255,11 +216,6 @@ func (a *AuthorityMenuApi) GetBaseMenuById(ctx context.Context, c *app.RequestCo
 func (a *AuthorityMenuApi) GetMenuList(ctx context.Context, c *app.RequestContext) {
 	var pageInfo request.PageInfo
 	err := c.BindAndValidate(&pageInfo)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
-	err = utils.Verify(pageInfo, utils.PageInfoVerify)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return

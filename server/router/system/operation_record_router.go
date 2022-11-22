@@ -15,7 +15,7 @@ func (s *OperationRecordRouter) InitSysOperationRecordRouter(Router *server.Hert
 		operationRecordRouter.DELETE("deleteSysOperationRecord", authorityMenuApi.DeleteSysOperationRecord)           // 删除SysOperationRecord
 		operationRecordRouter.DELETE("deleteSysOperationRecordByIds", authorityMenuApi.DeleteSysOperationRecordByIds) // 批量删除SysOperationRecord
 		operationRecordRouter.GET("findSysOperationRecord", authorityMenuApi.FindSysOperationRecord)                  // 根据ID获取SysOperationRecord
-		operationRecordRouter.GET("getSysOperationRecordList", authorityMenuApi.GetSysOperationRecordList)            // 获取SysOperationRecord列表
+		operationRecordRouter.POST("getSysOperationRecordList", authorityMenuApi.GetSysOperationRecordList)           // 获取SysOperationRecord列表
 
 	}
 }

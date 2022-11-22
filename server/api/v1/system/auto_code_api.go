@@ -12,7 +12,6 @@ import (
 	"github.com/edufriendchen/hertz-vue-admin/server/global"
 	"github.com/edufriendchen/hertz-vue-admin/server/model/common/response"
 	"github.com/edufriendchen/hertz-vue-admin/server/model/system"
-	"github.com/edufriendchen/hertz-vue-admin/server/utils"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 
@@ -36,10 +35,6 @@ var caser = cases.Title(language.English)
 func (autoApi *AutoCodeApi) PreviewTemp(ctx context.Context, c *app.RequestContext) {
 	var a system.AutoCodeStruct
 	_ = c.BindAndValidate(&a)
-	if err := utils.Verify(a, utils.AutoCodeVerify); err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
 	a.Pretreatment() // 处理go关键字
 	a.PackageT = caser.String(a.Package)
 	autoCode, err := autoCodeService.PreviewTemp(a)
@@ -63,10 +58,6 @@ func (autoApi *AutoCodeApi) PreviewTemp(ctx context.Context, c *app.RequestConte
 func (autoApi *AutoCodeApi) CreateTemp(ctx context.Context, c *app.RequestContext) {
 	var a system.AutoCodeStruct
 	_ = c.BindAndValidate(&a)
-	if err := utils.Verify(a, utils.AutoCodeVerify); err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
 	a.Pretreatment()
 	var apiIds []uint
 	if a.AutoCreateApiToSql {
@@ -180,10 +171,6 @@ func (autoApi *AutoCodeApi) GetColumn(ctx context.Context, c *app.RequestContext
 func (autoApi *AutoCodeApi) CreatePackage(ctx context.Context, c *app.RequestContext) {
 	var a system.SysAutoCode
 	_ = c.BindAndValidate(&a)
-	if err := utils.Verify(a, utils.AutoPackageVerify); err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
 	err := autoCodeService.CreateAutoCode(&a)
 	if err != nil {
 

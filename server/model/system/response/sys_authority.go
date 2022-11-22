@@ -8,5 +8,5 @@ type SysAuthorityResponse struct {
 
 type SysAuthorityCopyResponse struct {
 	Authority      system.SysAuthority `json:"authority"`
-	OldAuthorityId uint                `json:"oldAuthorityId"` // 旧角色ID
+	OldAuthorityId uint                `json:"oldAuthorityId" vd:"$>0"` // 旧角色ID
 }

@@ -2,14 +2,12 @@ package system
 
 import (
 	"context"
-	"fmt"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/edufriendchen/hertz-vue-admin/server/global"
 	"github.com/edufriendchen/hertz-vue-admin/server/model/common/request"
 	"github.com/edufriendchen/hertz-vue-admin/server/model/common/response"
 	"github.com/edufriendchen/hertz-vue-admin/server/model/system"
 	systemReq "github.com/edufriendchen/hertz-vue-admin/server/model/system/request"
-	"github.com/edufriendchen/hertz-vue-admin/server/utils"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
@@ -107,11 +105,6 @@ func (s *OperationRecordApi) FindSysOperationRecord(ctx context.Context, c *app.
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	err = utils.Verify(sysOperationRecord, utils.IdVerify)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
 	reSysOperationRecord, err := operationRecordService.GetSysOperationRecord(sysOperationRecord.ID)
 	if err != nil {
 		global.LOG.Error("查询失败!", zap.Error(err))
@@ -131,16 +124,18 @@ func (s *OperationRecordApi) FindSysOperationRecord(ctx context.Context, c *app.
 // @Success   200   {object}  response.Response{data=response.PageResult,msg=string}  "分页获取SysOperationRecord列表,返回包括列表,总数,页码,每页数量"
 // @Router    /sysOperationRecord/getSysOperationRecordList [get]
 func (s *OperationRecordApi) GetSysOperationRecordList(ctx context.Context, c *app.RequestContext) {
-	var pageInfo systemReq.SysOperationRecordSearch
-	err := c.BindAndValidate(&pageInfo)
+	var sysOperationRecordSearch systemReq.SysOperationRecordSearch
+	err := c.Bind(&sysOperationRecordSearch)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	list, total, err := operationRecordService.GetSysOperationRecordInfoList(pageInfo)
-
-	fmt.Println(list, total, err)
-
+	err = c.Validate(&sysOperationRecordSearch.PageInfo)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	list, total, err := operationRecordService.GetSysOperationRecordInfoList(sysOperationRecordSearch)
 	if err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
@@ -149,7 +144,7 @@ func (s *OperationRecordApi) GetSysOperationRecordList(ctx context.Context, c *a
 	response.OkWithDetailed(response.PageResult{
 		List:     list,
 		Total:    total,
-		Page:     pageInfo.Page,
-		PageSize: pageInfo.PageSize,
+		Page:     sysOperationRecordSearch.Page,
+		PageSize: sysOperationRecordSearch.PageSize,
 	}, "获取成功", c)
 }

@@ -12,6 +12,7 @@ import (
 // Author [piexlmax](https://github.com/piexlmax)
 // Author [SliverHorn](https://github.com/SliverHorn)
 func GormMysql() *gorm.DB {
+
 	m := global.CONFIG.Mysql
 	if m.Dbname == "" {
 		return nil

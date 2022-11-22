@@ -2,14 +2,14 @@ package request
 
 // PageInfo Paging common input parameter structure
 type PageInfo struct {
-	Page     int    `json:"page" form:"page"`         // 页码
-	PageSize int    `json:"pageSize" form:"pageSize"` // 每页大小
-	Keyword  string `json:"keyword" form:"keyword"`   // 关键字
+	Page     int    `json:"page" form:"page" vd:"$>0"`         // 页码
+	PageSize int    `json:"pageSize" form:"pageSize" vd:"$>0"` // 每页大小
+	Keyword  string `json:"keyword" form:"keyword"`            // 关键字
 }
 
 // GetById Find by id structure
 type GetById struct {
-	ID int `json:"id" form:"id"` // 主键ID
+	ID int `json:"id" form:"id" vd:"$>0"` // 主键ID
 }
 
 func (r *GetById) Uint() uint {
@@ -22,7 +22,7 @@ type IdsReq struct {
 
 // GetAuthorityId Get role by id structure
 type GetAuthorityId struct {
-	AuthorityId uint `json:"authorityId" form:"authorityId"` // 角色ID
+	AuthorityId uint `json:"authorityId" form:"authorityId" vd:"$>0"` // 角色ID
 }
 
 type Empty struct{}

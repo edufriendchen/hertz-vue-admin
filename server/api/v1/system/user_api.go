@@ -33,11 +33,6 @@ func (b *BaseApi) Login(ctx context.Context, c *app.RequestContext) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	err = utils.Verify(l, utils.LoginVerify)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
 	if store.Verify(l.CaptchaId, l.Captcha, true) {
 		u := &system.SysUser{Username: l.Username, Password: l.Password}
 		user, err := userService.Login(u)
@@ -244,11 +239,6 @@ func (b *BaseApi) Register(ctx context.Context, c *app.RequestContext) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	err = utils.Verify(r, utils.RegisterVerify)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
 	var authorities []system.SysAuthority
 	for _, v := range r.AuthorityIds {
 		authorities = append(authorities, system.SysAuthority{
@@ -280,11 +270,6 @@ func (b *BaseApi) ChangePassword(ctx context.Context, c *app.RequestContext) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	err = utils.Verify(req, utils.ChangePasswordVerify)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
 	uid := utils.GetUserID(c)
 	c.Set("UserId", uid)
 	u := &system.SysUser{MODEL: global.MODEL{ID: uid}, Password: req.Password}
@@ -309,11 +294,6 @@ func (b *BaseApi) ChangePassword(ctx context.Context, c *app.RequestContext) {
 func (b *BaseApi) GetUserList(ctx context.Context, c *app.RequestContext) {
 	var pageInfo request.PageInfo
 	err := c.BindAndValidate(&pageInfo)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
-	err = utils.Verify(pageInfo, utils.PageInfoVerify)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
@@ -377,10 +357,6 @@ func (b *BaseApi) SetUserAuthority(ctx context.Context, c *app.RequestContext) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	if UserVerifyErr := utils.Verify(sua, utils.SetUserAuthorityVerify); UserVerifyErr != nil {
-		response.FailWithMessage(UserVerifyErr.Error(), c)
-		return
-	}
 	userID := utils.GetUserID(c)
 	err = userService.SetUserAuthority(userID, sua.AuthorityId)
 	if err != nil {
@@ -442,11 +418,6 @@ func (b *BaseApi) DeleteUser(ctx context.Context, c *app.RequestContext) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	err = utils.Verify(reqId, utils.IdVerify)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
 	jwtId := utils.GetUserID(c)
 	if jwtId == uint(reqId.ID) {
 		response.FailWithMessage("删除失败, 自杀失败", c)
@@ -477,12 +448,6 @@ func (b *BaseApi) SetUserInfo(ctx context.Context, c *app.RequestContext) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	err = utils.Verify(user, utils.IdVerify)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
-
 	if len(user.AuthorityIds) != 0 {
 		err = userService.SetUserAuthorities(user.ID, user.AuthorityIds)
 		if err != nil {

@@ -12,6 +12,9 @@ import (
 
 // 初始化总路由
 func Routers(h *server.Hertz) {
+
+	ServerGroup := h.Group("")
+
 	systemRouter := router.RouterGroupApp.System
 	exampleRouter := router.RouterGroupApp.Example
 	// 如果想要不使用nginx代理前端网页，可以修改 web/.env.production 下的
@@ -29,12 +32,12 @@ func Routers(h *server.Hertz) {
 	// 跨域，如需跨域可以打开下面的注释
 	// Router.Use(middleware.Cors()) // 直接放行全部跨域请求
 	// Router.Use(middleware.CorsByRules()) // 按照配置的规则放行跨域请求
-	// global.LOG.Info("use middleware cors")
+	global.LOG.Info("use middleware cors")
 
 	// !  h.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	// ! global.LOG.Info("register swagger handler")
 	// 方便统一添加路由组前缀 多服务器上线使用
-	PublicGroup := h.Group("")
+	PublicGroup := ServerGroup.Group("")
 	{
 		// 健康监测
 		PublicGroup.GET("/health", func(ctx context.Context, c *app.RequestContext) {
@@ -50,21 +53,23 @@ func Routers(h *server.Hertz) {
 	// PrivateGroup := h.Group("")
 	// PrivateGroup.Use(middleware.JWTAuth()).Use(middleware.CasbinHandler())
 	{
-		systemRouter.InitApiRouter(h)                    // 注册功能api路由
-		systemRouter.InitJwtRouter(h)                    // jwt相关路由
-		systemRouter.InitUserRouter(h)                   // 注册用户路由
-		systemRouter.InitMenuRouter(h)                   // 注册menu路由
-		systemRouter.InitSystemRouter(h)                 // system相关路由
-		systemRouter.InitCasbinRouter(h)                 // 权限相关路由
-		systemRouter.InitAutoCodeRouter(h)               // 创建自动化代码
-		systemRouter.InitAuthorityRouter(h)              // 注册角色路由
-		systemRouter.InitSysDictionaryRouter(h)          // 字典管理
-		systemRouter.InitAutoCodeHistoryRouter(h)        // 自动化代码历史
-		systemRouter.InitSysOperationRecordRouter(h)     // 操作记录
-		systemRouter.InitSysDictionaryDetailRouter(h)    // 字典详情管理
-		systemRouter.InitAuthorityBtnRouterRouter(h)     // 字典详情管理
-		systemRouter.InitOnlineUserRouter(h)             // 在线用户管理
-		systemRouter.InitTestRouter(h)                   // 测试
+		systemRouter.InitApiRouter(h)                 // 注册功能api路由
+		systemRouter.InitJwtRouter(h)                 // jwt相关路由
+		systemRouter.InitUserRouter(h)                // 注册用户路由
+		systemRouter.InitMenuRouter(h)                // 注册menu路由
+		systemRouter.InitSystemRouter(h)              // system相关路由
+		systemRouter.InitCasbinRouter(h)              // 权限相关路由
+		systemRouter.InitAutoCodeRouter(h)            // 创建自动化代码
+		systemRouter.InitAuthorityRouter(h)           // 注册角色路由
+		systemRouter.InitSysDictionaryRouter(h)       // 字典管理
+		systemRouter.InitAutoCodeHistoryRouter(h)     // 自动化代码历史
+		systemRouter.InitSysOperationRecordRouter(h)  // 操作记录
+		systemRouter.InitSysDictionaryDetailRouter(h) // 字典详情管理
+		systemRouter.InitAuthorityBtnRouterRouter(h)  // 字典详情管理
+		systemRouter.InitOnlineUserRouter(h)          // 在线用户管理
+		systemRouter.InitTestRouter(h)                // 测试
+		systemRouter.InitLogRouter(h)
+
 		exampleRouter.InitExcelRouter(h)                 // 表格导入导出
 		exampleRouter.InitCustomerRouter(h)              // 客户路由
 		exampleRouter.InitFileUploadAndDownloadRouter(h) // 文件上传下载功能路由

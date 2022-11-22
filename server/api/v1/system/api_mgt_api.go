@@ -9,8 +9,6 @@ import (
 	"github.com/edufriendchen/hertz-vue-admin/server/model/system"
 	systemReq "github.com/edufriendchen/hertz-vue-admin/server/model/system/request"
 	systemRes "github.com/edufriendchen/hertz-vue-admin/server/model/system/response"
-	"github.com/edufriendchen/hertz-vue-admin/server/utils"
-
 	"go.uber.org/zap"
 )
 
@@ -26,14 +24,8 @@ type SystemApiApi struct{}
 // @Success   200   {object}  response.Response{msg=string}  "创建基础api"
 // @Router    /controller/createApi [post]
 func (s *SystemApiApi) CreateApi(ctx context.Context, c *app.RequestContext) {
-
 	var api system.SysApi
 	err := c.BindAndValidate(&api)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
-	err = utils.Verify(api, utils.ApiVerify)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
@@ -63,11 +55,6 @@ func (s *SystemApiApi) DeleteApi(ctx context.Context, c *app.RequestContext) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	err = utils.Verify(api.MODEL, utils.IdVerify)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
 	err = apiService.DeleteApi(api)
 	if err != nil {
 		global.LOG.Error("删除失败!", zap.Error(err))
@@ -87,18 +74,18 @@ func (s *SystemApiApi) DeleteApi(ctx context.Context, c *app.RequestContext) {
 // @Success   200   {object}  response.Response{data=response.PageResult,msg=string}  "分页获取API列表,返回包括列表,总数,页码,每页数量"
 // @Router    /controller/getApiList [post]
 func (s *SystemApiApi) GetApiList(ctx context.Context, c *app.RequestContext) {
-	var pageInfo systemReq.SearchApiParams
-	err := c.BindAndValidate(&pageInfo)
+	var SearchApiParams systemReq.SearchApiParams
+	err := c.Bind(&SearchApiParams)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	err = utils.Verify(pageInfo.PageInfo, utils.PageInfoVerify)
+	err = c.Validate(&SearchApiParams.PageInfo)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	list, total, err := apiService.GetAPIInfoList(pageInfo.SysApi, pageInfo.PageInfo, pageInfo.OrderKey, pageInfo.Desc)
+	list, total, err := apiService.GetAPIInfoList(SearchApiParams.SysApi, SearchApiParams.PageInfo, SearchApiParams.OrderKey, SearchApiParams.Desc)
 	if err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
@@ -107,8 +94,8 @@ func (s *SystemApiApi) GetApiList(ctx context.Context, c *app.RequestContext) {
 	response.OkWithDetailed(response.PageResult{
 		List:     list,
 		Total:    total,
-		Page:     pageInfo.Page,
-		PageSize: pageInfo.PageSize,
+		Page:     SearchApiParams.Page,
+		PageSize: SearchApiParams.PageSize,
 	}, "获取成功", c)
 }
 
@@ -124,11 +111,6 @@ func (s *SystemApiApi) GetApiList(ctx context.Context, c *app.RequestContext) {
 func (s *SystemApiApi) GetApiById(ctx context.Context, c *app.RequestContext) {
 	var idInfo request.GetById
 	err := c.BindAndValidate(&idInfo)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
-	err = utils.Verify(idInfo, utils.IdVerify)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
@@ -154,11 +136,6 @@ func (s *SystemApiApi) GetApiById(ctx context.Context, c *app.RequestContext) {
 func (s *SystemApiApi) UpdateApi(ctx context.Context, c *app.RequestContext) {
 	var api system.SysApi
 	err := c.BindAndValidate(&api)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
-	err = utils.Verify(api, utils.ApiVerify)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return

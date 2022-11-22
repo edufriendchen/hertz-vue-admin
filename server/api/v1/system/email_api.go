@@ -1,12 +1,11 @@
-package api
+package system
 
 import (
 	"context"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/edufriendchen/hertz-vue-admin/server/global"
 	"github.com/edufriendchen/hertz-vue-admin/server/model/common/response"
-	email_response "github.com/edufriendchen/hertz-vue-admin/server/plugin/email/model/response"
-	"github.com/edufriendchen/hertz-vue-admin/server/plugin/email/service"
+	response2 "github.com/edufriendchen/hertz-vue-admin/server/model/system/response"
 	"go.uber.org/zap"
 )
 
@@ -20,7 +19,7 @@ type EmailApi struct{}
 // @Success   200  {string}  string  "{"success":true,"data":{},"msg":"发送成功"}"
 // @Router    /email/emailTest [post]
 func (s *EmailApi) EmailTest(ctx context.Context, c *app.RequestContext) {
-	err := service.ServiceGroupApp.EmailTest()
+	err := emailService.EmailTest()
 	if err != nil {
 		global.LOG.Error("发送失败!", zap.Error(err))
 		response.FailWithMessage("发送失败", c)
@@ -38,13 +37,13 @@ func (s *EmailApi) EmailTest(ctx context.Context, c *app.RequestContext) {
 // @Success   200   {string}  string                "{"success":true,"data":{},"msg":"发送成功"}"
 // @Router    /email/sendEmail [post]
 func (s *EmailApi) SendEmail(ctx context.Context, c *app.RequestContext) {
-	var email email_response.Email
+	var email response2.Email
 	err := c.BindAndValidate(&email)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	err = service.ServiceGroupApp.SendEmail(email.To, email.Subject, email.Body)
+	err = emailService.SendEmail(email.To, email.Subject, email.Body)
 	if err != nil {
 		global.LOG.Error("发送失败!", zap.Error(err))
 		response.FailWithMessage("发送失败", c)

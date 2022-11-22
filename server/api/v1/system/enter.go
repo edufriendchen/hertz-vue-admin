@@ -18,6 +18,7 @@ type ApiGroup struct {
 	DictionaryDetailApi
 	AuthorityBtnApi
 	OnlineUserApi
+	EmailApi
 	TestApi
 }
 
@@ -38,4 +39,5 @@ var (
 	dictionaryDetailService = service.ServiceGroupApp.SystemServiceGroup.DictionaryDetailService
 	authorityBtnService     = service.ServiceGroupApp.SystemServiceGroup.AuthorityBtnService
 	onlineUserService       = service.ServiceGroupApp.SystemServiceGroup.OnlineUserService
+	emailService            = service.ServiceGroupApp.SystemServiceGroup.EmailService
 )

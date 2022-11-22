@@ -7,7 +7,6 @@ import (
 	"github.com/edufriendchen/hertz-vue-admin/server/model/common/response"
 	"github.com/edufriendchen/hertz-vue-admin/server/model/system/request"
 	systemRes "github.com/edufriendchen/hertz-vue-admin/server/model/system/response"
-	"github.com/edufriendchen/hertz-vue-admin/server/utils"
 	"go.uber.org/zap"
 )
 
@@ -25,11 +24,6 @@ type CasbinApi struct{}
 func (cas *CasbinApi) UpdateCasbin(ctx context.Context, c *app.RequestContext) {
 	var cmr request.CasbinInReceive
 	err := c.BindAndValidate(&cmr)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
-	err = utils.Verify(cmr, utils.AuthorityIdVerify)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
@@ -55,11 +49,6 @@ func (cas *CasbinApi) UpdateCasbin(ctx context.Context, c *app.RequestContext) {
 func (cas *CasbinApi) GetPolicyPathByAuthorityId(ctx context.Context, c *app.RequestContext) {
 	var casbin request.CasbinInReceive
 	err := c.BindAndValidate(&casbin)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
-	err = utils.Verify(casbin, utils.AuthorityIdVerify)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return

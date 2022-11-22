@@ -7,7 +7,6 @@ import (
 	"github.com/edufriendchen/hertz-vue-admin/server/model/common/response"
 	"github.com/edufriendchen/hertz-vue-admin/server/model/system"
 	"github.com/edufriendchen/hertz-vue-admin/server/model/system/request"
-	"github.com/edufriendchen/hertz-vue-admin/server/utils"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
@@ -101,11 +100,6 @@ func (s *DictionaryDetailApi) UpdateSysDictionaryDetail(ctx context.Context, c *
 func (s *DictionaryDetailApi) FindSysDictionaryDetail(ctx context.Context, c *app.RequestContext) {
 	var detail system.SysDictionaryDetail
 	err := c.BindAndValidate(&detail)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
-	err = utils.Verify(detail, utils.IdVerify)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return

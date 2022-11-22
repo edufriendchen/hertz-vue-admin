@@ -12,7 +12,6 @@ import (
 	"github.com/edufriendchen/hertz-vue-admin/server/model/system"
 	systemReq "github.com/edufriendchen/hertz-vue-admin/server/model/system/request"
 	systemRes "github.com/edufriendchen/hertz-vue-admin/server/model/system/response"
-	"github.com/edufriendchen/hertz-vue-admin/server/utils"
 	"go.uber.org/zap"
 )
 
@@ -41,11 +40,6 @@ func (authorityApi *AuthorityApi) CreateAuthority(ctx context.Context, c *app.Re
 	}
 	var authority system.SysAuthority
 	err = c.BindAndValidate(&authority)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
-	err = utils.Verify(authority, utils.AuthorityVerify)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
@@ -83,16 +77,6 @@ func (authorityApi *AuthorityApi) CopyAuthority(ctx context.Context, c *app.Requ
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	err = utils.Verify(copyInfo, utils.OldAuthorityVerify)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
-	err = utils.Verify(copyInfo.Authority, utils.AuthorityVerify)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
 	authBack, err := authorityService.CopyAuthority(copyInfo)
 	if err != nil {
 		global.LOG.Error("拷贝失败!", zap.Error(err))
@@ -125,11 +109,6 @@ func (authorityApi *AuthorityApi) DeleteAuthority(ctx context.Context, c *app.Re
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	err = utils.Verify(authority, utils.AuthorityIdVerify)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
 	err = authorityService.DeleteAuthority(&authority)
 	if err != nil { // 删除角色之前需要判断是否有用户正在使用此角色
 		global.LOG.Error("删除失败!", zap.Error(err))
@@ -158,11 +137,6 @@ func (authorityApi *AuthorityApi) UpdateAuthority(ctx context.Context, c *app.Re
 	}
 	var auth system.SysAuthority
 	err = c.BindAndValidate(&auth)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
-	err = utils.Verify(auth, utils.AuthorityVerify)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
@@ -203,11 +177,6 @@ func (authorityApi *AuthorityApi) GetAuthorityList(ctx context.Context, c *app.R
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	err = utils.Verify(pageInfo, utils.PageInfoVerify)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
 	list, total, err := authorityService.GetAuthorityInfoList(pageInfo)
 	if err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))
@@ -241,11 +210,6 @@ func (authorityApi *AuthorityApi) SetDataAuthority(ctx context.Context, c *app.R
 	}
 	var auth system.SysAuthority
 	err = c.BindAndValidate(&auth)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
-	err = utils.Verify(auth, utils.AuthorityIdVerify)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return

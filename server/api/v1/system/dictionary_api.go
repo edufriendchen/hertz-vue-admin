@@ -7,7 +7,6 @@ import (
 	"github.com/edufriendchen/hertz-vue-admin/server/model/common/response"
 	"github.com/edufriendchen/hertz-vue-admin/server/model/system"
 	"github.com/edufriendchen/hertz-vue-admin/server/model/system/request"
-	"github.com/edufriendchen/hertz-vue-admin/server/utils"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"strconv"
@@ -134,11 +133,6 @@ func (s *DictionaryApi) GetSysDictionaryList(ctx context.Context, c *app.Request
 	}
 	pageInfo.Page = page
 	pageInfo.PageSize = PageSize
-	err := utils.Verify(pageInfo.PageInfo, utils.PageInfoVerify)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
 	list, total, err := dictionaryService.GetSysDictionaryInfoList(pageInfo)
 	if err != nil {
 		global.LOG.Error("获取失败!", zap.Error(err))

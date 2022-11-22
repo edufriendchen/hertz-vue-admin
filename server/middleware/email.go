@@ -10,8 +10,8 @@ import (
 
 	"github.com/edufriendchen/hertz-vue-admin/server/global"
 	"github.com/edufriendchen/hertz-vue-admin/server/model/system"
-	"github.com/edufriendchen/hertz-vue-admin/server/plugin/email/utils"
 	"github.com/edufriendchen/hertz-vue-admin/server/service"
+	"github.com/edufriendchen/hertz-vue-admin/server/utils"
 	utils2 "github.com/edufriendchen/hertz-vue-admin/server/utils"
 	"go.uber.org/zap"
 )

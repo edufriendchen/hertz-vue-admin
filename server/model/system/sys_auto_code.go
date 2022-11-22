@@ -10,17 +10,17 @@ import (
 
 // AutoCodeStruct 初始版本自动化代码工具
 type AutoCodeStruct struct {
-	StructName         string   `json:"structName"`         // Struct名称
-	TableName          string   `json:"tableName"`          // 表名
-	PackageName        string   `json:"packageName"`        // 文件名称
-	HumpPackageName    string   `json:"humpPackageName"`    // go文件名称
-	Abbreviation       string   `json:"abbreviation"`       // Struct简称
-	Description        string   `json:"description"`        // Struct中文名称
-	AutoCreateApiToSql bool     `json:"autoCreateApiToSql"` // 是否自动创建api
-	AutoCreateResource bool     `json:"autoCreateResource"` // 是否自动创建资源标识
-	AutoMoveFile       bool     `json:"autoMoveFile"`       // 是否自动移动文件
-	BusinessDB         string   `json:"businessDB"`         // 业务数据库
-	Fields             []*Field `json:"fields,omitempty"`
+	StructName         string   `json:"structName" vd:"len($)>0"`   // Struct名称
+	TableName          string   `json:"tableName"`                  // 表名
+	PackageName        string   `json:"packageName" vd:"len($)>0"`  // 文件名称
+	HumpPackageName    string   `json:"humpPackageName"`            // go文件名称
+	Abbreviation       string   `json:"abbreviation" vd:"len($)>0"` // Struct简称
+	Description        string   `json:"description"`                // Struct中文名称
+	AutoCreateApiToSql bool     `json:"autoCreateApiToSql"`         // 是否自动创建api
+	AutoCreateResource bool     `json:"autoCreateResource"`         // 是否自动创建资源标识
+	AutoMoveFile       bool     `json:"autoMoveFile"`               // 是否自动移动文件
+	BusinessDB         string   `json:"businessDB"`                 // 业务数据库
+	Fields             []*Field `json:"fields,omitempty" vd:"@:len($)>0"`
 	HasTimer           bool
 	DictTypes          []string `json:"-"`
 	Package            string   `json:"package"`
@@ -70,7 +70,7 @@ var ErrAutoMove error = errors.New("创建代码成功并移动文件成功")
 
 type SysAutoCode struct {
 	global.MODEL
-	PackageName string `json:"packageName" gorm:"comment:包名"`
+	PackageName string `json:"packageName" gorm:"comment:包名" vd:"len($)>0"`
 	Label       string `json:"label" gorm:"comment:展示名"`
 	Desc        string `json:"desc" gorm:"comment:描述"`
 }
