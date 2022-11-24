@@ -68,7 +68,6 @@ func Routers(h *server.Hertz) {
 		systemRouter.InitAuthorityBtnRouterRouter(h)  // 字典详情管理
 		systemRouter.InitOnlineUserRouter(h)          // 在线用户管理
 		systemRouter.InitTestRouter(h)                // 测试
-		systemRouter.InitLogRouter(h)
 
 		exampleRouter.InitExcelRouter(h)                 // 表格导入导出
 		exampleRouter.InitCustomerRouter(h)              // 客户路由

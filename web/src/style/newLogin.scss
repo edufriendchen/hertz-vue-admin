@@ -8,7 +8,7 @@
     position: relative;
     .input-icon {
         padding-right: 6px;
-        padding-top: 4px;
+        padding-top: 4px;   
     }
     .login_panel {
         position: absolute;
@@ -31,8 +31,12 @@
         .login_panel_form {
             width: 420px;
             background-color: #fff;
-            padding: 40px 40px 40px 40px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            padding-left: 40px;
+            padding-right: 40px;
             border-radius: 10px;
+            margin-bottom: 20px;
             box-shadow: 2px 3px 7px rgba(0, 0, 0, .2);
             .login_panel_form_title {
                 display: flex;
@@ -40,7 +44,7 @@
                 margin: 30px 0;
                 .login_panel_form_title_logo {
                     width: 90px;
-                    height: 72px;
+                    height: 92px;
                 }
                 .login_panel_form_title_p {
                     font-size: 40px;
@@ -64,20 +68,29 @@
             }
         }
         .login_panel_foot {
+            width: 100%;
             position: absolute;
-            bottom: 20px;
-            .links {
+            bottom: 0px;
+            .foot_body {
                 display: flex;
-                align-items: center;
-                justify-content: space-between;
-                .link-icon {
-                    width: 30px;
-                    height: 30px;
+                .foot_body_item {
+                    margin: auto;
+                    .links {
+                        margin: auto;
+                        display: flex;
+                        align-items: center;
+                        .link-icon {
+                            margin-bottom: 5px;
+                            margin-left: 45px;
+                            width: 25px;
+                            height: 25px;
+                        }
+                    }
+                    .copyright {
+                        color: #777777;
+                        margin-top: 5px;
+                    }
                 }
-            }
-            .copyright {
-                color: #777777;
-                margin-top: 5px;
             }
         }
     }
