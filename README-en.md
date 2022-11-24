@@ -1,4 +1,6 @@
 
+[中文](./README.md) | English
+
 <div align=center>
 <img src="https://user-images.githubusercontent.com/78396698/203819698-18a1b65d-02e1-4524-bd7c-a6306a00f570.png" width="400" height="380" />
 </div>
