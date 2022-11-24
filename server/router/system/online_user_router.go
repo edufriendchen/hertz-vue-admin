@@ -1,14 +1,13 @@
 package system
 
 import (
-	"github.com/cloudwego/hertz/pkg/app/server"
 	"github.com/cloudwego/hertz/pkg/route"
 	v1 "github.com/edufriendchen/hertz-vue-admin/server/api/v1"
 )
 
 type OnlineUserRouter struct{}
 
-func (o *OnlineUserRouter) InitOnlineUserRouter(Router *server.Hertz) route.IRoutes {
+func (o *OnlineUserRouter) InitOnlineUserRouter(Router *route.RouterGroup) route.IRoutes {
 	onlineUserRouterWithoutRecord := Router.Group("onlineUser")
 	onlineUserApi := v1.ApiGroupApp.SystemApiGroup.OnlineUserApi
 	{

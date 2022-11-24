@@ -1,14 +1,14 @@
 package system
 
 import (
-	"github.com/cloudwego/hertz/pkg/app/server"
+	"github.com/cloudwego/hertz/pkg/route"
 	v1 "github.com/edufriendchen/hertz-vue-admin/server/api/v1"
 	"github.com/edufriendchen/hertz-vue-admin/server/middleware"
 )
 
 type SysRouter struct{}
 
-func (s *SysRouter) InitSystemRouter(Router *server.Hertz) {
+func (s *SysRouter) InitSystemRouter(Router *route.RouterGroup) {
 	sysRouter := Router.Group("system").Use(middleware.OperationRecord)
 	systemApi := v1.ApiGroupApp.SystemApiGroup.SystemApi
 	{

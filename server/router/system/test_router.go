@@ -1,13 +1,13 @@
 package system
 
 import (
-	"github.com/cloudwego/hertz/pkg/app/server"
+	"github.com/cloudwego/hertz/pkg/route"
 	v1 "github.com/edufriendchen/hertz-vue-admin/server/api/v1"
 )
 
 type TestRouter struct{}
 
-func (o *OnlineUserRouter) InitTestRouter(Router *server.Hertz) {
+func (o *OnlineUserRouter) InitTestRouter(Router *route.RouterGroup) {
 	testRouter := Router.Group("test")
 	testApi := v1.ApiGroupApp.SystemApiGroup.TestApi
 	{

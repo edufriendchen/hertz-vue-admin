@@ -1,16 +1,16 @@
 package system
 
 import (
-	"github.com/cloudwego/hertz/pkg/app/server"
+	"github.com/cloudwego/hertz/pkg/route"
 	v1 "github.com/edufriendchen/hertz-vue-admin/server/api/v1"
 	"github.com/edufriendchen/hertz-vue-admin/server/middleware"
 )
 
 type UserRouter struct{}
 
-func (s *UserRouter) InitUserRouter(h *server.Hertz) {
-	userRouter := h.Group("user").Use(middleware.OperationRecord)
-	userRouterWithoutRecord := h.Group("user")
+func (s *UserRouter) InitUserRouter(Router *route.RouterGroup) {
+	userRouter := Router.Group("user").Use(middleware.OperationRecord)
+	userRouterWithoutRecord := Router.Group("user")
 	baseApi := v1.ApiGroupApp.SystemApiGroup.BaseApi
 	{
 		userRouter.POST("admin_register", baseApi.Register)               // 管理员注册账号

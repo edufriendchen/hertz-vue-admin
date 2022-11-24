@@ -1,13 +1,13 @@
 package example
 
 import (
-	"github.com/cloudwego/hertz/pkg/app/server"
+	"github.com/cloudwego/hertz/pkg/route"
 	v1 "github.com/edufriendchen/hertz-vue-admin/server/api/v1"
 )
 
 type FileUploadAndDownloadRouter struct{}
 
-func (e *FileUploadAndDownloadRouter) InitFileUploadAndDownloadRouter(Router *server.Hertz) {
+func (e *FileUploadAndDownloadRouter) InitFileUploadAndDownloadRouter(Router *route.RouterGroup) {
 	fileUploadAndDownloadRouter := Router.Group("fileUploadAndDownload")
 	exaFileUploadAndDownloadApi := v1.ApiGroupApp.ExampleApiGroup.FileUploadAndDownloadApi
 	{

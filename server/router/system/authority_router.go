@@ -1,13 +1,13 @@
 package system
 
 import (
-	"github.com/cloudwego/hertz/pkg/app/server"
+	"github.com/cloudwego/hertz/pkg/route"
 	v1 "github.com/edufriendchen/hertz-vue-admin/server/api/v1"
 )
 
 type AuthorityRouter struct{}
 
-func (s *AuthorityRouter) InitAuthorityRouter(Router *server.Hertz) {
+func (s *AuthorityRouter) InitAuthorityRouter(Router *route.RouterGroup) {
 	authorityRouterWithoutRecord := Router.Group("authority")
 	authorityApi := v1.ApiGroupApp.SystemApiGroup.AuthorityApi
 	{

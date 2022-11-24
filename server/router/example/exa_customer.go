@@ -1,14 +1,14 @@
 package example
 
 import (
-	"github.com/cloudwego/hertz/pkg/app/server"
+	"github.com/cloudwego/hertz/pkg/route"
 	v1 "github.com/edufriendchen/hertz-vue-admin/server/api/v1"
 	"github.com/edufriendchen/hertz-vue-admin/server/middleware"
 )
 
 type CustomerRouter struct{}
 
-func (e *CustomerRouter) InitCustomerRouter(Router *server.Hertz) {
+func (e *CustomerRouter) InitCustomerRouter(Router *route.RouterGroup) {
 	customerRouter := Router.Group("customer").Use(middleware.OperationRecord)
 	customerRouterWithoutRecord := Router.Group("customer")
 	exaCustomerApi := v1.ApiGroupApp.ExampleApiGroup.CustomerApi

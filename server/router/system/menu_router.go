@@ -1,7 +1,6 @@
 package system
 
 import (
-	"github.com/cloudwego/hertz/pkg/app/server"
 	"github.com/cloudwego/hertz/pkg/route"
 	v1 "github.com/edufriendchen/hertz-vue-admin/server/api/v1"
 	"github.com/edufriendchen/hertz-vue-admin/server/middleware"
@@ -9,7 +8,7 @@ import (
 
 type MenuRouter struct{}
 
-func (s *MenuRouter) InitMenuRouter(Router *server.Hertz) route.IRoutes {
+func (s *MenuRouter) InitMenuRouter(Router *route.RouterGroup) route.IRoutes {
 	menuRouter := Router.Group("menu").Use(middleware.OperationRecord)
 	menuRouterWithoutRecord := Router.Group("menu")
 	authorityMenuApi := v1.ApiGroupApp.SystemApiGroup.AuthorityMenuApi

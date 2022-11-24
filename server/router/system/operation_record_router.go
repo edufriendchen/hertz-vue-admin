@@ -1,13 +1,13 @@
 package system
 
 import (
-	"github.com/cloudwego/hertz/pkg/app/server"
+	"github.com/cloudwego/hertz/pkg/route"
 	v1 "github.com/edufriendchen/hertz-vue-admin/server/api/v1"
 )
 
 type OperationRecordRouter struct{}
 
-func (s *OperationRecordRouter) InitSysOperationRecordRouter(Router *server.Hertz) {
+func (s *OperationRecordRouter) InitSysOperationRecordRouter(Router *route.RouterGroup) {
 	operationRecordRouter := Router.Group("sysOperationRecord")
 	authorityMenuApi := v1.ApiGroupApp.SystemApiGroup.OperationRecordApi
 	{

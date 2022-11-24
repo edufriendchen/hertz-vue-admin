@@ -1,13 +1,13 @@
 package example
 
 import (
-	"github.com/cloudwego/hertz/pkg/app/server"
+	"github.com/cloudwego/hertz/pkg/route"
 	v1 "github.com/edufriendchen/hertz-vue-admin/server/api/v1"
 )
 
 type ExcelRouter struct{}
 
-func (e *ExcelRouter) InitExcelRouter(Router *server.Hertz) {
+func (e *ExcelRouter) InitExcelRouter(Router *route.RouterGroup) {
 	excelRouter := Router.Group("excel")
 	exaExcelApi := v1.ApiGroupApp.ExampleApiGroup.ExcelApi
 	{
