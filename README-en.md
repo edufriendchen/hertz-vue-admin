@@ -1,8 +1,6 @@
 
 English | [简体中文](./README.md) 
 
-[English](./README-en.md) | 简体中文
-
 <div align=center>
 <img src="https://user-images.githubusercontent.com/78396698/203823434-c90a37a2-5711-45bb-9936-1d7cb7a29b4e.png" width="430" height="380" />
 </div>
