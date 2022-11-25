@@ -97,7 +97,7 @@ swag init
 
 - 前端：使用基于 [Vue](https://vuejs.org/) 的 [Element](https://github.com/ElemeFE/element) 构建基础页面。
 
-- 后端：使用字节跳动Cloudwego的Golang微服务HTTP框架。
+- 后端：使用字节跳动Cloudwego的Golang微服务HTTP框架 —— [Hertz](https://www.cloudwego.io/zh/docs/hertz/)。
 
 - 数据库：采用`MySql` > (5.7) 版本 数据库引擎 InnoDB，使用 [gorm](http://gorm.cn/) 实现对数据库的基本操作。
 
