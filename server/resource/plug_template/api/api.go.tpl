@@ -5,7 +5,6 @@ import (
 	"github.com/edufriendchen/hertz-vue-admin/server/model/common/response"
 {{ if .NeedModel }}	"github.com/edufriendchen/hertz-vue-admin/server/plugin/{{ .Snake}}/model" {{ end }}
 	"github.com/edufriendchen/hertz-vue-admin/server/plugin/{{ .Snake}}/service"
-	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
 
@@ -16,7 +15,7 @@ type {{ .PlugName}}Api struct{}
 // @Produce  application/json
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"发送成功"}"
 // @Router /{{ .RouterGroup}}/routerName [post]
-func (p *{{ .PlugName}}Api) ApiName(c *gin.Context) {
+func (p *{{ .PlugName}}Api) ApiName(ctx context.Context, c *app.RequestContext) {
     {{ if .HasRequest}}
         var plug model.Request
         _ = c.ShouldBindJSON(&plug)

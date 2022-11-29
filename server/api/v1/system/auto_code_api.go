@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/cloudwego/hertz/pkg/app"
+	"github.com/cloudwego/hertz/pkg/common/utils"
 	"net/url"
 	"os"
 	"strings"
@@ -12,11 +13,9 @@ import (
 	"github.com/edufriendchen/hertz-vue-admin/server/global"
 	"github.com/edufriendchen/hertz-vue-admin/server/model/common/response"
 	"github.com/edufriendchen/hertz-vue-admin/server/model/system"
+	"go.uber.org/zap"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
-
-	"github.com/gin-gonic/gin"
-	"go.uber.org/zap"
 )
 
 type AutoCodeApi struct{}
@@ -42,7 +41,7 @@ func (autoApi *AutoCodeApi) PreviewTemp(ctx context.Context, c *app.RequestConte
 		global.LOG.Error("预览失败!", zap.Error(err))
 		response.FailWithMessage("预览失败", c)
 	} else {
-		response.OkWithDetailed(gin.H{"autoCode": autoCode}, "预览成功", c)
+		response.OkWithDetailed(utils.H{"autoCode": autoCode}, "预览成功", c)
 	}
 }
 
@@ -114,7 +113,7 @@ func (autoApi *AutoCodeApi) GetDB(ctx context.Context, c *app.RequestContext) {
 		global.LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
 	} else {
-		response.OkWithDetailed(gin.H{"dbs": dbs, "dbList": dbList}, "获取成功", c)
+		response.OkWithDetailed(utils.H{"dbs": dbs, "dbList": dbList}, "获取成功", c)
 	}
 }
 
@@ -134,7 +133,7 @@ func (autoApi *AutoCodeApi) GetTables(ctx context.Context, c *app.RequestContext
 		global.LOG.Error("查询table失败!", zap.Error(err))
 		response.FailWithMessage("查询table失败", c)
 	} else {
-		response.OkWithDetailed(gin.H{"tables": tables}, "获取成功", c)
+		response.OkWithDetailed(utils.H{"tables": tables}, "获取成功", c)
 	}
 }
 
@@ -155,7 +154,7 @@ func (autoApi *AutoCodeApi) GetColumn(ctx context.Context, c *app.RequestContext
 		global.LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
 	} else {
-		response.OkWithDetailed(gin.H{"columns": columns}, "获取成功", c)
+		response.OkWithDetailed(utils.H{"columns": columns}, "获取成功", c)
 	}
 }
 
@@ -195,7 +194,7 @@ func (autoApi *AutoCodeApi) GetPackage(ctx context.Context, c *app.RequestContex
 		global.LOG.Error("获取失败!", zap.Error(err))
 		response.FailWithMessage("获取失败", c)
 	} else {
-		response.OkWithDetailed(gin.H{"pkgs": pkgs}, "获取成功", c)
+		response.OkWithDetailed(utils.H{"pkgs": pkgs}, "获取成功", c)
 	}
 }
 
@@ -276,11 +275,11 @@ func (autoApi *AutoCodeApi) InstallPlugin(ctx context.Context, c *app.RequestCon
 		return
 	}
 	response.OkWithData([]interface{}{
-		gin.H{
+		utils.H{
 			"code": web,
 			"msg":  webStr,
 		},
-		gin.H{
+		utils.H{
 			"code": server,
 			"msg":  serverStr,
 		}}, c)

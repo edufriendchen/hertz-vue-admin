@@ -3,13 +3,13 @@ package system
 import (
 	"context"
 	"github.com/cloudwego/hertz/pkg/app"
+	utils2 "github.com/cloudwego/hertz/pkg/common/utils"
 	"github.com/edufriendchen/hertz-vue-admin/server/global"
 	"github.com/edufriendchen/hertz-vue-admin/server/model/common/response"
 	"github.com/edufriendchen/hertz-vue-admin/server/model/system"
 	systemRes "github.com/edufriendchen/hertz-vue-admin/server/model/system/response"
 	"github.com/edufriendchen/hertz-vue-admin/server/utils"
 
-	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
 
@@ -87,5 +87,5 @@ func (s *SystemApi) GetServerInfo(ctx context.Context, c *app.RequestContext) {
 		response.FailWithMessage("获取失败", c)
 		return
 	}
-	response.OkWithDetailed(gin.H{"server": server}, "获取成功", c)
+	response.OkWithDetailed(utils2.H{"server": server}, "获取成功", c)
 }

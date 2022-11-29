@@ -3,6 +3,7 @@ package middleware
 import (
 	"context"
 	"github.com/cloudwego/hertz/pkg/app"
+	hertzUtils "github.com/cloudwego/hertz/pkg/common/utils"
 	"strconv"
 	"time"
 
@@ -11,8 +12,6 @@ import (
 	"github.com/edufriendchen/hertz-vue-admin/server/model/system"
 	"github.com/edufriendchen/hertz-vue-admin/server/service"
 	"github.com/edufriendchen/hertz-vue-admin/server/utils"
-
-	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
 
@@ -23,12 +22,12 @@ func JWTAuth() app.HandlerFunc {
 		// 我们这里jwt鉴权取头部信息 x-token 登录时回返回token信息 这里前端需要把token存储到cookie或者本地localStorage中 不过需要跟后端协商过期时间 可以约定刷新令牌或者重新登录
 		token := c.Request.Header.Get("x-token")
 		if token == "" {
-			response.FailWithDetailed(gin.H{"reload": true}, "未登录或非法访问", c)
+			response.FailWithDetailed(hertzUtils.H{"reload": true}, "未登录或非法访问", c)
 			c.Abort()
 			return
 		}
 		if jwtService.IsBlacklist(token) {
-			response.FailWithDetailed(gin.H{"reload": true}, "您的帐户异地登陆或令牌失效", c)
+			response.FailWithDetailed(hertzUtils.H{"reload": true}, "您的帐户异地登陆或令牌失效", c)
 			c.Abort()
 			return
 		}
@@ -37,11 +36,11 @@ func JWTAuth() app.HandlerFunc {
 		claims, err := j.ParseToken(token)
 		if err != nil {
 			if err == utils.TokenExpired {
-				response.FailWithDetailed(gin.H{"reload": true}, "授权已过期", c)
+				response.FailWithDetailed(hertzUtils.H{"reload": true}, "授权已过期", c)
 				c.Abort()
 				return
 			}
-			response.FailWithDetailed(gin.H{"reload": true}, err.Error(), c)
+			response.FailWithDetailed(hertzUtils.H{"reload": true}, err.Error(), c)
 			c.Abort()
 			return
 		}

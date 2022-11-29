@@ -3,11 +3,11 @@ package system
 import (
 	"context"
 	"github.com/cloudwego/hertz/pkg/app"
+	"github.com/cloudwego/hertz/pkg/common/utils"
 	"github.com/edufriendchen/hertz-vue-admin/server/global"
 	"github.com/edufriendchen/hertz-vue-admin/server/model/common/response"
 	"github.com/edufriendchen/hertz-vue-admin/server/model/system"
 	"github.com/edufriendchen/hertz-vue-admin/server/model/system/request"
-	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"strconv"
 )
@@ -111,7 +111,7 @@ func (s *DictionaryApi) FindSysDictionary(ctx context.Context, c *app.RequestCon
 		response.FailWithMessage("字典未创建或未开启", c)
 		return
 	}
-	response.OkWithDetailed(gin.H{"resysDictionary": sysDictionary}, "查询成功", c)
+	response.OkWithDetailed(utils.H{"resysDictionary": sysDictionary}, "查询成功", c)
 }
 
 // GetSysDictionaryList

@@ -4,7 +4,7 @@
 
 const config = {
   appName: 'Hertz-Vue-Admin',
-  appLogo: '/src/assets/nav_logo.png',
+  appLogo: '@/assets/nav_logo.png',
   showViteLogo: true
 }
 

@@ -4,7 +4,7 @@
       <el-row :class="[isShadowBg?'shadowBg':'']" @click="changeShadow()" />
       <el-aside style="border-top-left-radius: 15px;" class="main-cont main-left gva-aside">
         <div class="tilte" :style="{background: backgroundColor}">
-          <img style="width: 45px;height: 45px;" :src="$GIN_VUE_ADMIN.appLogo">
+          <img style="width: 45px;height: 45px;" src="@/assets/nav_logo.png">
           <div v-if="isSider" style="padding-left: 0px;" class="tit-text" :style="{color:textColor}">{{ $GIN_VUE_ADMIN.appName }}</div>
         </div>
         <Aside class="aside" />

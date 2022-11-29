@@ -3,11 +3,11 @@ package middleware
 import (
 	"context"
 	"github.com/cloudwego/hertz/pkg/app"
+	hertzUtils "github.com/cloudwego/hertz/pkg/common/utils"
 	"github.com/edufriendchen/hertz-vue-admin/server/global"
 	"github.com/edufriendchen/hertz-vue-admin/server/model/common/response"
 	"github.com/edufriendchen/hertz-vue-admin/server/service"
 	"github.com/edufriendchen/hertz-vue-admin/server/utils"
-	"github.com/gin-gonic/gin"
 	"strconv"
 )
 
@@ -27,7 +27,7 @@ func CasbinHandler() app.HandlerFunc {
 			e := casbinService.Casbin() // 判断策略中是否存在
 			success, _ := e.Enforce(sub, obj, act)
 			if !success {
-				response.FailWithDetailed(gin.H{}, "权限不足", c)
+				response.FailWithDetailed(hertzUtils.H{}, "权限不足", c)
 				c.Abort()
 				return
 			}

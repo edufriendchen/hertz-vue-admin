@@ -1,21 +1,21 @@
 package middleware
 
 import (
+	"context"
+	"github.com/cloudwego/hertz/pkg/app"
 	"net"
 	"net/http"
-	"net/http/httputil"
 	"os"
 	"runtime/debug"
 	"strings"
 
 	"github.com/edufriendchen/hertz-vue-admin/server/global"
-	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
 
 // GinRecovery recover掉项目可能出现的panic，并使用zap记录相关日志
-func GinRecovery(stack bool) gin.HandlerFunc {
-	return func(c *gin.Context) {
+func GinRecovery(stack bool) app.HandlerFunc {
+	return func(ctx context.Context, c *app.RequestContext) {
 		defer func() {
 			if err := recover(); err != nil {
 				// Check for a broken connection, as it is not really a
@@ -29,11 +29,14 @@ func GinRecovery(stack bool) gin.HandlerFunc {
 					}
 				}
 
-				httpRequest, _ := httputil.DumpRequest(c.Request, false)
+				// httpRequest, _ := httputil.DumpRequest(c.Request, false)
+
+				httpRequest := "Hertz-Vue-Admin"
+
 				if brokenPipe {
-					global.LOG.Error(c.Request.URL.Path,
+					global.LOG.Error(string(c.Request.URI().Path()),
 						zap.Any("error", err),
-						zap.String("request", string(httpRequest)),
+						zap.String("request", httpRequest),
 					)
 					// If the connection is dead, we can't write a status to it.
 					_ = c.Error(err.(error)) // nolint: errcheck
@@ -56,6 +59,6 @@ func GinRecovery(stack bool) gin.HandlerFunc {
 				c.AbortWithStatus(http.StatusInternalServerError)
 			}
 		}()
-		c.Next()
+		c.Next(ctx)
 	}
 }

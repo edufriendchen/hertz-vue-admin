@@ -2,6 +2,7 @@ package core
 
 import (
 	"fmt"
+	"github.com/cloudwego/hertz/pkg/app/server"
 	"github.com/mattn/go-colorable"
 	"time"
 
@@ -10,10 +11,6 @@ import (
 	"github.com/edufriendchen/hertz-vue-admin/server/service/system"
 	"go.uber.org/zap"
 )
-
-type server interface {
-	ListenAndServe() error
-}
 
 func RunWindowsServer() {
 
@@ -30,7 +27,8 @@ func RunWindowsServer() {
 	DefaultWriter = colorable.NewColorableStdout()
 	// 初始化服务配置
 	address := fmt.Sprintf(":%d", global.CONFIG.System.Addr)
-	s := initServer()
+	s := initServer(server.WithExitWaitTime(24 * 60 * 60 * 15))
+
 	s.Use(Logger())
 	// 初始化路由
 	initialize.Routers(s)

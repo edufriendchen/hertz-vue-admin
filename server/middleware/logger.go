@@ -1,14 +1,15 @@
 package middleware
 
+import "C"
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/cloudwego/hertz/pkg/app"
 	"io"
 	"strings"
 	"time"
-
-	"github.com/gin-gonic/gin"
 )
 
 // LogLayout 日志layout
@@ -27,41 +28,41 @@ type LogLayout struct {
 
 type Logger struct {
 	// Filter 用户自定义过滤
-	Filter func(c *gin.Context) bool
+	Filter func(ctx context.Context, c *app.RequestContext) bool
 	// FilterKeyword 关键字过滤(key)
 	FilterKeyword func(layout *LogLayout) bool
 	// AuthProcess 鉴权处理
-	AuthProcess func(c *gin.Context, layout *LogLayout)
+	AuthProcess func(c *app.RequestContext, layout *LogLayout)
 	// 日志处理
 	Print func(LogLayout)
 	// Source 服务唯一标识
 	Source string
 }
 
-func (l Logger) SetLoggerMiddleware() gin.HandlerFunc {
-	return func(c *gin.Context) {
+func (l Logger) SetLoggerMiddleware() app.HandlerFunc {
+	return func(ctx context.Context, c *app.RequestContext) {
 		start := time.Now()
-		path := c.Request.URL.Path
-		query := c.Request.URL.RawQuery
+		path := c.Request.URI().Path()
+		query := c.GetRawData()
 		var body []byte
-		if l.Filter != nil && !l.Filter(c) {
-			body, _ = c.GetRawData()
+		if l.Filter != nil && !l.Filter(ctx, c) {
+			body, _ = c.Body()
 			// 将原body塞回去
-			c.Request.Body = io.NopCloser(bytes.NewBuffer(body))
+			c.SetBodyStream(io.NopCloser(bytes.NewBuffer(body)), 1024)
 		}
-		c.Next()
+		c.Next(ctx)
 		cost := time.Since(start)
 		layout := LogLayout{
 			Time:      time.Now(),
-			Path:      path,
-			Query:     query,
+			Path:      string(path),
+			Query:     string(query),
 			IP:        c.ClientIP(),
-			UserAgent: c.Request.UserAgent(),
-			Error:     strings.TrimRight(c.Errors.ByType(gin.ErrorTypePrivate).String(), "\n"),
+			UserAgent: string(c.UserAgent()),
+			Error:     strings.TrimRight(c.Errors.ByType(ErrorTypePrivate).String(), "\n"),
 			Cost:      cost,
 			Source:    l.Source,
 		}
-		if l.Filter != nil && !l.Filter(c) {
+		if l.Filter != nil && !l.Filter(ctx, c) {
 			layout.Body = string(body)
 		}
 		if l.AuthProcess != nil {
@@ -77,13 +78,13 @@ func (l Logger) SetLoggerMiddleware() gin.HandlerFunc {
 	}
 }
 
-func DefaultLogger() gin.HandlerFunc {
+func DefaultLogger() app.HandlerFunc {
 	return Logger{
 		Print: func(layout LogLayout) {
 			// 标准输出,k8s做收集
 			v, _ := json.Marshal(layout)
 			fmt.Println(string(v))
 		},
-		Source: "GVA",
+		Source: "Hertz-Vue-Admin",
 	}.SetLoggerMiddleware()
 }

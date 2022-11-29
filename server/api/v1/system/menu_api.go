@@ -3,6 +3,7 @@ package system
 import (
 	"context"
 	"github.com/cloudwego/hertz/pkg/app"
+	hertzUtils "github.com/cloudwego/hertz/pkg/common/utils"
 	"github.com/edufriendchen/hertz-vue-admin/server/global"
 	"github.com/edufriendchen/hertz-vue-admin/server/model/common/request"
 	"github.com/edufriendchen/hertz-vue-admin/server/model/common/response"
@@ -10,8 +11,6 @@ import (
 	systemReq "github.com/edufriendchen/hertz-vue-admin/server/model/system/request"
 	systemRes "github.com/edufriendchen/hertz-vue-admin/server/model/system/response"
 	"github.com/edufriendchen/hertz-vue-admin/server/utils"
-
-	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
 
@@ -101,7 +100,7 @@ func (a *AuthorityMenuApi) GetMenuAuthority(ctx context.Context, c *app.RequestC
 		response.FailWithDetailed(systemRes.SysMenusResponse{Menus: menus}, "获取失败", c)
 		return
 	}
-	response.OkWithDetailed(gin.H{"menus": menus}, "获取成功", c)
+	response.OkWithDetailed(hertzUtils.H{"menus": menus}, "获取成功", c)
 }
 
 // AddBaseMenu

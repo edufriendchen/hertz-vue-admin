@@ -3,11 +3,11 @@ package system
 import (
 	"context"
 	"github.com/cloudwego/hertz/pkg/app"
+	"github.com/cloudwego/hertz/pkg/common/utils"
 	"github.com/edufriendchen/hertz-vue-admin/server/global"
 	"github.com/edufriendchen/hertz-vue-admin/server/model/common/request"
 	"github.com/edufriendchen/hertz-vue-admin/server/model/common/response"
 	systemReq "github.com/edufriendchen/hertz-vue-admin/server/model/system/request"
-	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
 
@@ -34,7 +34,7 @@ func (a *AutoCodeHistoryApi) First(ctx context.Context, c *app.RequestContext) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	response.OkWithDetailed(gin.H{"meta": data}, "获取成功", c)
+	response.OkWithDetailed(utils.H{"meta": data}, "获取成功", c)
 }
 
 // Delete

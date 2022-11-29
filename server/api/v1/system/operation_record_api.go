@@ -3,12 +3,12 @@ package system
 import (
 	"context"
 	"github.com/cloudwego/hertz/pkg/app"
+	"github.com/cloudwego/hertz/pkg/common/utils"
 	"github.com/edufriendchen/hertz-vue-admin/server/global"
 	"github.com/edufriendchen/hertz-vue-admin/server/model/common/request"
 	"github.com/edufriendchen/hertz-vue-admin/server/model/common/response"
 	"github.com/edufriendchen/hertz-vue-admin/server/model/system"
 	systemReq "github.com/edufriendchen/hertz-vue-admin/server/model/system/request"
-	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
 
@@ -111,7 +111,7 @@ func (s *OperationRecordApi) FindSysOperationRecord(ctx context.Context, c *app.
 		response.FailWithMessage("查询失败", c)
 		return
 	}
-	response.OkWithDetailed(gin.H{"reSysOperationRecord": reSysOperationRecord}, "查询成功", c)
+	response.OkWithDetailed(utils.H{"reSysOperationRecord": reSysOperationRecord}, "查询成功", c)
 }
 
 // GetSysOperationRecordList

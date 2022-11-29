@@ -3,19 +3,19 @@ package middleware
 import (
 	"context"
 	"errors"
+	"github.com/cloudwego/hertz/pkg/app"
+	"github.com/cloudwego/hertz/pkg/common/utils"
 	"net/http"
 	"time"
 
-	"go.uber.org/zap"
-
 	"github.com/edufriendchen/hertz-vue-admin/server/global"
 	"github.com/edufriendchen/hertz-vue-admin/server/model/common/response"
-	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
 )
 
 type LimitConfig struct {
 	// GenerationKey 根据业务生成key 下面CheckOrMark查询生成
-	GenerationKey func(c *gin.Context) string
+	GenerationKey func(ctx context.Context, c *app.RequestContext) string
 	// 检查函数,用户可修改具体逻辑,更加灵活
 	CheckOrMark func(key string, expire int, limit int) error
 	// Expire key 过期时间
@@ -24,20 +24,20 @@ type LimitConfig struct {
 	Limit int
 }
 
-func (l LimitConfig) LimitWithTime() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		if err := l.CheckOrMark(l.GenerationKey(c), l.Expire, l.Limit); err != nil {
-			c.JSON(http.StatusOK, gin.H{"code": response.ERROR, "msg": err})
+func (l LimitConfig) LimitWithTime() app.HandlerFunc {
+	return func(ctx context.Context, c *app.RequestContext) {
+		if err := l.CheckOrMark(l.GenerationKey(ctx, c), l.Expire, l.Limit); err != nil {
+			c.JSON(http.StatusOK, utils.H{"code": response.ERROR, "msg": err})
 			c.Abort()
 			return
 		} else {
-			c.Next()
+			c.Next(ctx)
 		}
 	}
 }
 
 // DefaultGenerationKey 默认生成key
-func DefaultGenerationKey(c *gin.Context) string {
+func DefaultGenerationKey(ctx context.Context, c *app.RequestContext) string {
 	return "GVA_Limit" + c.ClientIP()
 }
 
@@ -52,7 +52,7 @@ func DefaultCheckOrMark(key string, expire int, limit int) (err error) {
 	return err
 }
 
-func DefaultLimit() gin.HandlerFunc {
+func DefaultLimit() app.HandlerFunc {
 	return LimitConfig{
 		GenerationKey: DefaultGenerationKey,
 		CheckOrMark:   DefaultCheckOrMark,

@@ -3,12 +3,11 @@ package system
 import (
 	"context"
 	"github.com/cloudwego/hertz/pkg/app"
+	"github.com/cloudwego/hertz/pkg/common/utils"
 	"github.com/edufriendchen/hertz-vue-admin/server/global"
 	"github.com/edufriendchen/hertz-vue-admin/server/model/common/response"
 	"github.com/edufriendchen/hertz-vue-admin/server/model/system/request"
 	"go.uber.org/zap"
-
-	"github.com/gin-gonic/gin"
 )
 
 type DBApi struct{}
@@ -57,5 +56,5 @@ func (i *DBApi) CheckDB(ctx context.Context, c *app.RequestContext) {
 		needInit = false
 	}
 	global.LOG.Info(message)
-	response.OkWithDetailed(gin.H{"needInit": needInit}, message, c)
+	response.OkWithDetailed(utils.H{"needInit": needInit}, message, c)
 }

@@ -6,6 +6,7 @@ import (
 	"github.com/cloudwego/hertz/pkg/app"
 	"strconv"
 
+	hertzUtils "github.com/cloudwego/hertz/pkg/common/utils"
 	"github.com/edufriendchen/hertz-vue-admin/server/global"
 	"github.com/edufriendchen/hertz-vue-admin/server/model/common/request"
 	"github.com/edufriendchen/hertz-vue-admin/server/model/common/response"
@@ -13,8 +14,6 @@ import (
 	systemReq "github.com/edufriendchen/hertz-vue-admin/server/model/system/request"
 	systemRes "github.com/edufriendchen/hertz-vue-admin/server/model/system/response"
 	"github.com/edufriendchen/hertz-vue-admin/server/utils"
-
-	"github.com/gin-gonic/gin"
 	"github.com/go-redis/redis/v8"
 	"go.uber.org/zap"
 )
@@ -532,7 +531,7 @@ func (b *BaseApi) GetUserInfo(ctx context.Context, c *app.RequestContext) {
 		response.FailWithMessage("获取失败", c)
 		return
 	}
-	response.OkWithDetailed(gin.H{"userInfo": ReqUser}, "获取成功", c)
+	response.OkWithDetailed(hertzUtils.H{"userInfo": ReqUser}, "获取成功", c)
 }
 
 // ResetPassword

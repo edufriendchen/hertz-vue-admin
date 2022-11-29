@@ -7,7 +7,6 @@ import (
     {{.Package}}Req "github.com/edufriendchen/hertz-vue-admin/server/model/{{.Package}}/request"
     "github.com/edufriendchen/hertz-vue-admin/server/model/common/response"
     "github.com/edufriendchen/hertz-vue-admin/server/service"
-    "github.com/gin-gonic/gin"
     "go.uber.org/zap"
     {{- if .NeedValid }}
     "github.com/edufriendchen/hertz-vue-admin/server/utils"

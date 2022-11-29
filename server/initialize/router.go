@@ -7,13 +7,12 @@ import (
 	_ "github.com/edufriendchen/hertz-vue-admin/server/docs"
 	"github.com/edufriendchen/hertz-vue-admin/server/global"
 	"github.com/edufriendchen/hertz-vue-admin/server/router"
-	"github.com/edufriendchen/hertz-vue-admin/server/utils"
 )
 
 // 初始化总路由
 func Routers(h *server.Hertz) {
 
-	ServerGroup := h.Group("/v1")
+	ServerGroup := h.Group("")
 
 	systemRouter := router.RouterGroupApp.System
 	exampleRouter := router.RouterGroupApp.Example
@@ -41,7 +40,6 @@ func Routers(h *server.Hertz) {
 	{
 		// 健康监测
 		PublicGroup.GET("/health", func(ctx context.Context, c *app.RequestContext) {
-			utils.GetAddressByIp("58.56.139.206")
 			c.JSON(200, "ok")
 		})
 	}
