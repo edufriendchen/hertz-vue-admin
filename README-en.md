@@ -17,7 +17,7 @@ START--
 
 **First of thanks:** At present, the source code of the business part of Hertz vue admin open source project refers to the open source project [Gin Vue Admin](https://www.gin-vue-admin.com) And [Eladmin](https://eladmin.vip/ )。
 
-**Important statement:** Since Hertz vue admin is being restructured, it is only open source for non-commercial use before the completion of the reconstruction. If you need to use it commercially, please move to the open source project [Gin Vue Admin]() According to its [flipped aurora team](https://github.com/flipped-aurora ) Declaration. (At the same time, Hertz vue admin team decided to provide some open source commercial products after the reconstruction of Hertz vue admin is completed.)
+**Important statement:** The new Hertz-vue-admin is under reconstruction. Welcome to use the Friendly Open Source Project [Gin Vue Admin]() , according to the statement of its [flipped aurora team](https://github.com/flipped-aurora ).
 
 ## 1. Basic introduction
 
