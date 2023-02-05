@@ -16,7 +16,7 @@ START--
 
 **首先鸣谢:** 目前Hertz-vue-admin开源项目业务部分源码借鉴开源项目[Gin-Vue-Admin](https://www.gin-vue-admin.com)和[Eladmin](https://eladmin.vip/)。
 
-**重要声明:** 由于Hertz-vue-admin正在重构，如需使用请移步开源项目[Gin-Vue-Admin](https://www.gin-vue-admin.com)，依据其[flipped-aurora团队](https://github.com/flipped-aurora)声明。 
+**重要声明:** 全新的Hertz-vue-admin正在重构中，欢迎使用友项开源项目[Gin-Vue-Admin](https://www.gin-vue-admin.com)，依据其[flipped-aurora团队](https://github.com/flipped-aurora)声明。 
 
 
 ## 1. 基本介绍
